@@ -27,6 +27,7 @@ class GameManager:
         while True:
             for obj in GameManager.objects:
                 obj.update()
-
+            GameManager.pixels.clear()
             for obj in GameManager.objects:
                 obj.draw(GameManager.pixels)
+            GameManager.pixels.show()

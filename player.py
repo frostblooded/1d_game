@@ -54,6 +54,4 @@ class Player:
             self.current_pos += 1
 
     def draw(self, pixels):
-        pixels.clear()
         pixels.set_pixel(self.current_pos, Adafruit_WS2801.RGB_to_color(50, 100, 150))
-        pixels.show()
