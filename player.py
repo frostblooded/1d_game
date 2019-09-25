@@ -4,19 +4,19 @@ from select import select
 import Adafruit_WS2801
 
 from evdev import InputDevice, ecodes
-from game_manager import GameManager
+from game_object import GameObject
+from pixels_manager import PixelsManager
 
 
-class Player:
+class Player(GameObject):
     RIGHT_ARROW_KEY_CODE = 547
     LEFT_ARROW_KEY_CODE = 546
 
     RUN_WAIT = 50000
 
     def __init__(self):
+        super().__init__(current_pos=0)
         self.gamepad = InputDevice('/dev/input/event1')
-
-        self.current_pos = 0
 
         self.last_run_left = datetime.datetime.now()
         self.running_left = False
@@ -45,13 +45,13 @@ class Player:
         delta_since_run_left = datetime.datetime.now() - self.last_run_left
         delta_since_run_right = datetime.datetime.now() - self.last_run_right
 
-        if self.running_left and delta_since_run_left.microseconds >= self.RUN_WAIT and self.current_pos > 0:
+        if self.running_left and delta_since_run_left.microseconds >= self.RUN_WAIT and self.get_current_position() > 0:
             self.last_run_left = datetime.datetime.now()
-            self.current_pos -= 1
+            self.move_left()
 
-        if self.running_right and delta_since_run_right.microseconds >= self.RUN_WAIT and self.current_pos < GameManager.PIXEL_COUNT - 1:
+        if self.running_right and delta_since_run_right.microseconds >= self.RUN_WAIT and self.get_current_position() < PixelsManager.PIXEL_COUNT - 1:
             self.last_run_right = datetime.datetime.now()
-            self.current_pos += 1
+            self.move_right()
 
     def draw(self, pixels):
-        pixels.set_pixel(self.current_pos, Adafruit_WS2801.RGB_to_color(50, 100, 150))
+        pixels.set_pixel(self.get_current_position(), Adafruit_WS2801.RGB_to_color(50, 100, 150))

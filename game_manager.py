@@ -1,33 +1,38 @@
-import Adafruit_WS2801
-
-import RPi.GPIO as GPIO
-import Adafruit_GPIO.SPI as SPI
+from pixels_manager import PixelsManager
+from map import Map
+from player import Player
+from enemy import Enemy
+from direction import Direction
 
 
 class GameManager:
-    PIXEL_COUNT = 32
-
-    SPI_PORT = 0
-    SPI_DEVICE = 0
-
     objects = []
-    pixels = None
 
     @staticmethod
     def setup():
-        GameManager.pixels = Adafruit_WS2801.WS2801Pixels(GameManager.PIXEL_COUNT,
-                                                          spi=SPI.SpiDev(GameManager.SPI_PORT, GameManager.SPI_DEVICE),
-                                                          gpio=GPIO)
-        print(GameManager.pixels)
+        PixelsManager.setup()
+        Map.setup()
+        GameManager.objects.append(Player())
+        GameManager.objects.append(Enemy(Direction.LEFT))
 
     @staticmethod
     def run():
         GameManager.setup()
 
         while True:
-            for obj in GameManager.objects:
-                obj.update()
-            GameManager.pixels.clear()
-            for obj in GameManager.objects:
-                obj.draw(GameManager.pixels)
-            GameManager.pixels.show()
+            GameManager.update()
+            GameManager.draw()
+
+    @staticmethod
+    def update():
+        for obj in GameManager.objects:
+            obj.update()
+
+    @staticmethod
+    def draw():
+        PixelsManager.pixels.clear()
+
+        for obj in GameManager.objects:
+            obj.draw(PixelsManager.pixels)
+
+        PixelsManager.pixels.show()
