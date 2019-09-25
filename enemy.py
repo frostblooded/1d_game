@@ -22,9 +22,9 @@ class Enemy(GameObject):
         delta_since_run = datetime.datetime.now() - self.last_run
 
         if delta_since_run.microseconds >= self.RUN_WAIT:
-            if self.direction == Direction.LEFT and self.get_current_position() > 0:
+            if self.direction == Direction.LEFT:
                 self.move_left()
-            elif self.direction == Direction.RIGHT and self.get_current_position() < PixelsManager.PIXEL_COUNT - 1:
+            elif self.direction == Direction.RIGHT:
                 self.move_right()
 
             self.last_run = datetime.datetime.now()

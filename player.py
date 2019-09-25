@@ -5,7 +5,6 @@ import Adafruit_WS2801
 
 from evdev import InputDevice, ecodes
 from game_object import GameObject
-from pixels_manager import PixelsManager
 
 
 class Player(GameObject):
@@ -45,11 +44,11 @@ class Player(GameObject):
         delta_since_run_left = datetime.datetime.now() - self.last_run_left
         delta_since_run_right = datetime.datetime.now() - self.last_run_right
 
-        if self.running_left and delta_since_run_left.microseconds >= self.RUN_WAIT and self.get_current_position() > 0:
+        if self.running_left and delta_since_run_left.microseconds >= self.RUN_WAIT:
             self.last_run_left = datetime.datetime.now()
             self.move_left()
 
-        if self.running_right and delta_since_run_right.microseconds >= self.RUN_WAIT and self.get_current_position() < PixelsManager.PIXEL_COUNT - 1:
+        if self.running_right and delta_since_run_right.microseconds >= self.RUN_WAIT:
             self.last_run_right = datetime.datetime.now()
             self.move_right()
 

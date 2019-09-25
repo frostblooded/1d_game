@@ -1,4 +1,5 @@
 from map import Map
+from pixels_manager import PixelsManager
 
 
 class GameObject:
@@ -9,7 +10,14 @@ class GameObject:
     def get_current_position(self):
         return self.__current_pos
 
+    @staticmethod
+    def validate_position(position):
+        return 0 <= position < PixelsManager.PIXEL_COUNT
+
     def set_current_position(self, position):
+        if not GameObject.validate_position(position):
+            return
+
         Map.move_object_to(self, position, self.get_current_position())
         self.__current_pos = position
 
