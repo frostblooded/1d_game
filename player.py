@@ -1,6 +1,9 @@
 import datetime
+import math
+
 from game_object import GameObject
 from game_ender import GameEnder
+from pixels_manager import PixelsManager
 
 import Adafruit_WS2801
 
@@ -13,7 +16,7 @@ class Player(GameObject):
     __instance = None
 
     def __init__(self):
-        super().__init__(current_pos=0)
+        super().__init__(current_pos=math.ceil(PixelsManager.PIXEL_COUNT / 2))
 
         self.last_run_left = datetime.datetime.now()
         self.running_left = False
