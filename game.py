@@ -1,5 +1,6 @@
 from enemy_spawner import EnemySpawner
 from game_manager import GameManager
+from game_ender import GameEnder
 from input_manager import InputManager
 from map import Map
 from pixels_manager import PixelsManager
@@ -12,6 +13,7 @@ class Game:
     def start():
         PixelsManager.setup()
         Map.setup()
+        GameEnder.setup()
 
         InputManager()
         Player.get_instance()

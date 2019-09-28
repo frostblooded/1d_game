@@ -3,6 +3,7 @@ import Adafruit_WS2801
 from pixels_manager import PixelsManager
 from game_ender import GameEnder
 from objects_holder import ObjectsHolder
+import time
 
 
 class GameManager:
@@ -23,10 +24,9 @@ class GameManager:
 
         while not self.__restart_game:
             if GameEnder.has_ended:
-                self.draw_ended_game()
+                self.end_game()
             else:
-                self.update()
-                self.draw()
+                self.run_frame()
 
     def update(self):
         for obj in ObjectsHolder.objects:
@@ -50,4 +50,13 @@ class GameManager:
 
     def restart(self):
         self.__restart_game = True
+
+    def end_game(self):
+        self.draw_ended_game()
+        time.sleep(2)
+        self.restart()
+
+    def run_frame(self):
+        self.update()
+        self.draw()
 
