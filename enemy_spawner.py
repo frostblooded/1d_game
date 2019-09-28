@@ -7,7 +7,7 @@ from game_object import GameObject
 
 
 class EnemySpawner(GameObject):
-    SPAWN_WAIT = 500000
+    SPAWN_WAIT = 900000
 
     def __init__(self):
         super().__init__()

@@ -18,12 +18,17 @@ class AutoMovingObject(GameObject):
         delta_since_run = datetime.datetime.now() - self.last_run
 
         if delta_since_run.microseconds >= self.get_run_wait():
-            if self.direction == Direction.LEFT:
-                self.move_left()
-            elif self.direction == Direction.RIGHT:
-                self.move_right()
-
+            self.on_run_timer()
             self.last_run = datetime.datetime.now()
+
+    def on_run_timer(self):
+        self.move()
+
+    def move(self):
+        if self.direction == Direction.LEFT:
+            self.move_left()
+        elif self.direction == Direction.RIGHT:
+            self.move_right()
 
     def draw(self, pixels):
         pixels.set_pixel(self.get_current_position(), self.get_color())
