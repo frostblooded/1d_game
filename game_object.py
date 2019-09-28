@@ -1,5 +1,6 @@
 from map import Map
 from pixels_manager import PixelsManager
+from objects_holder import ObjectsHolder
 
 
 class GameObject:
@@ -29,3 +30,7 @@ class GameObject:
 
     def on_collision(self, other_object):
         pass
+
+    def destroy(self):
+        ObjectsHolder.objects.remove(self)
+        Map.remove_from(self, self.get_current_position())

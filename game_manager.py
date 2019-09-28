@@ -7,18 +7,17 @@ from enemy import Enemy
 from direction import Direction
 from game_ender import GameEnder
 from input_manager import InputManager
+from objects_holder import ObjectsHolder
 
 
 class GameManager:
-    objects = []
-
     @staticmethod
     def setup():
         PixelsManager.setup()
         Map.setup()
-        GameManager.objects.append(InputManager())
-        GameManager.objects.append(Player.get_instance())
-        GameManager.objects.append(Enemy(Direction.LEFT))
+        ObjectsHolder.objects.append(InputManager())
+        ObjectsHolder.objects.append(Player.get_instance())
+        ObjectsHolder.objects.append(Enemy(Direction.LEFT))
 
     @staticmethod
     def run():
@@ -33,14 +32,14 @@ class GameManager:
 
     @staticmethod
     def update():
-        for obj in GameManager.objects:
+        for obj in ObjectsHolder.objects:
             obj.update()
 
     @staticmethod
     def draw():
         PixelsManager.pixels.clear()
 
-        for obj in GameManager.objects:
+        for obj in ObjectsHolder.objects:
             obj.draw(PixelsManager.pixels)
 
         PixelsManager.pixels.show()
@@ -53,3 +52,4 @@ class GameManager:
             PixelsManager.pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(50, 0, 0))
 
         PixelsManager.pixels.show()
+

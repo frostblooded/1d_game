@@ -1,0 +1,2 @@
+class ObjectsHolder:
+    objects = []

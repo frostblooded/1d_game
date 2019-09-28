@@ -8,7 +8,7 @@ from player import Player
 
 
 class Enemy(GameObject):
-    DAMAGE = 5
+    DAMAGE = 2
     RUN_WAIT = 200000
 
     def __init__(self, direction):
@@ -40,3 +40,4 @@ class Enemy(GameObject):
     def on_collision(self, other_object):
         if isinstance(other_object, Player):
             other_object.damage(self.damage)
+            self.destroy()

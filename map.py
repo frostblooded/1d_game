@@ -22,3 +22,7 @@ class Map:
             obj.on_collision(colliding_object)
             colliding_object.on_collision(obj)
 
+    @staticmethod
+    def remove_from(game_object, position):
+        Map.map[position].remove(game_object)
+
