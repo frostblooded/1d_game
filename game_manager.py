@@ -16,10 +16,10 @@ class GameManager:
     def setup():
         PixelsManager.setup()
         Map.setup()
-        ObjectsHolder.objects.append(InputManager())
-        ObjectsHolder.objects.append(Player.get_instance())
-        ObjectsHolder.objects.append(EnemySpawner())
-        # ObjectsHolder.objects.append(Enemy(Direction.LEFT))
+
+        InputManager()
+        Player.get_instance()
+        EnemySpawner()
 
     @staticmethod
     def run():

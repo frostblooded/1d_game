@@ -3,18 +3,20 @@ from player import Player
 from pixels_manager import PixelsManager
 from objects_holder import ObjectsHolder
 from bullet import Bullet
+from game_object import GameObject
 
 from select import select
 from evdev import InputDevice, ecodes
 
 
-class InputManager:
+class InputManager(GameObject):
     RIGHT_ARROW_KEY_CODE = 547
     LEFT_ARROW_KEY_CODE = 546
     SQUARE_KEY_CODE = 308
     CIRCLE_KEY_CODE = 305
 
     def __init__(self):
+        super().__init__()
         self.gamepad = InputDevice('/dev/input/event1')
 
     def update(self):
@@ -57,4 +59,4 @@ class InputManager:
 
     def spawn_bullet(self, direction):
         if self.can_spawn_bullet(direction):
-            ObjectsHolder.objects.append(Bullet(self.get_bullet_spawn_pos(direction), direction))
+            Bullet(self.get_bullet_spawn_pos(direction), direction)

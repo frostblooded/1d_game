@@ -11,14 +11,13 @@ class Enemy(AutoMovingObject):
     RUN_WAIT = 200000
 
     def __init__(self, direction):
+        self.damage = self.DAMAGE
         starting_position = 0
 
         if direction == Direction.LEFT:
             starting_position = PixelsManager.PIXEL_COUNT - 1
 
         super().__init__(current_pos=starting_position, direction=direction)
-
-        self.damage = self.DAMAGE
 
     def on_collision(self, other_object):
         if isinstance(other_object, Player):

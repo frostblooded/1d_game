@@ -4,8 +4,9 @@ from objects_holder import ObjectsHolder
 
 
 class GameObject:
-    def __init__(self, current_pos):
+    def __init__(self, current_pos=0):
         self.__current_pos = None
+        ObjectsHolder.objects.append(self)
         self.set_current_position(current_pos)
 
     def get_current_position(self):
