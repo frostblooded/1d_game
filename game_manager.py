@@ -8,6 +8,7 @@ from direction import Direction
 from game_ender import GameEnder
 from input_manager import InputManager
 from objects_holder import ObjectsHolder
+from enemy_spawner import EnemySpawner
 
 
 class GameManager:
@@ -17,7 +18,8 @@ class GameManager:
         Map.setup()
         ObjectsHolder.objects.append(InputManager())
         ObjectsHolder.objects.append(Player.get_instance())
-        ObjectsHolder.objects.append(Enemy(Direction.LEFT))
+        ObjectsHolder.objects.append(EnemySpawner())
+        # ObjectsHolder.objects.append(Enemy(Direction.LEFT))
 
     @staticmethod
     def run():

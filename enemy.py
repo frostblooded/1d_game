@@ -1,4 +1,3 @@
-import datetime
 import Adafruit_WS2801
 
 from pixels_manager import PixelsManager
@@ -8,7 +7,7 @@ from player import Player
 
 
 class Enemy(AutoMovingObject):
-    DAMAGE = 5
+    DAMAGE = 3
     RUN_WAIT = 200000
 
     def __init__(self, direction):
@@ -25,3 +24,9 @@ class Enemy(AutoMovingObject):
         if isinstance(other_object, Player):
             other_object.damage(self.damage)
             self.destroy()
+
+    def get_color(self):
+        return Adafruit_WS2801.RGB_to_color(220, 50, 50)
+
+    def get_run_wait(self):
+        return Enemy.RUN_WAIT

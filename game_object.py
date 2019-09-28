@@ -17,6 +17,7 @@ class GameObject:
 
     def set_current_position(self, position):
         if not GameObject.validate_position(position):
+            self.on_boundary_leave()
             return
 
         old_pos = self.__current_pos
@@ -35,3 +36,6 @@ class GameObject:
     def destroy(self):
         ObjectsHolder.objects.remove(self)
         Map.remove_from(self, self.get_current_position())
+
+    def on_boundary_leave(self):
+        pass

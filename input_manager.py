@@ -1,4 +1,8 @@
+from direction import Direction
 from player import Player
+from pixels_manager import PixelsManager
+from objects_holder import ObjectsHolder
+from bullet import Bullet
 
 from select import select
 from evdev import InputDevice, ecodes
@@ -7,6 +11,8 @@ from evdev import InputDevice, ecodes
 class InputManager:
     RIGHT_ARROW_KEY_CODE = 547
     LEFT_ARROW_KEY_CODE = 546
+    SQUARE_KEY_CODE = 308
+    CIRCLE_KEY_CODE = 305
 
     def __init__(self):
         self.gamepad = InputDevice('/dev/input/event1')
@@ -29,7 +35,26 @@ class InputManager:
                     if event.code == self.RIGHT_ARROW_KEY_CODE and event.value == 0:
                         print('Stop running right')
                         Player.get_instance().running_right = False
+                    if event.code == self.CIRCLE_KEY_CODE and event.value == 1:
+                        self.spawn_bullet(Direction.RIGHT)
+                    if event.code == self.SQUARE_KEY_CODE and event.value == 1:
+                        self.spawn_bullet(Direction.LEFT)
 
     def draw(self, pixels):
         pass
 
+    def can_spawn_bullet(self, direction):
+        return direction == direction.LEFT and Player.get_instance().get_current_position() > 0 \
+               or direction == direction.RIGHT and Player.get_instance().get_current_position() < PixelsManager.PIXEL_COUNT - 1
+
+    def get_bullet_spawn_pos(self, direction):
+        switcher = {
+            direction.LEFT: Player.get_instance().get_current_position() - 1,
+            direction.RIGHT: Player.get_instance().get_current_position() + 1
+        }
+
+        return switcher[direction]
+
+    def spawn_bullet(self, direction):
+        if self.can_spawn_bullet(direction):
+            ObjectsHolder.objects.append(Bullet(self.get_bullet_spawn_pos(direction), direction))
