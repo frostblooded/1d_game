@@ -19,10 +19,10 @@ class Map:
     @staticmethod
     def collide_objects_with(objects, colliding_object):
         for obj in objects:
-            obj.on_collision(colliding_object)
-            colliding_object.on_collision(obj)
+            if obj.collision_enabled and colliding_object.collision_enabled:
+                obj.on_collision(colliding_object)
+                colliding_object.on_collision(obj)
 
     @staticmethod
     def remove_from(game_object, position):
         Map.map[position].remove(game_object)
-
