@@ -10,6 +10,8 @@ import Adafruit_WS2801
 
 class Player(GameObject):
     HEALTH = 5
+    HEALTH_LOST_ON_SHOT = 1
+    HEALTH_GAINED_ON_KILL = 1
 
     RUN_WAIT = 50000
 
@@ -54,6 +56,9 @@ class Player(GameObject):
 
         if self.__health <= 0:
             self.die()
+
+    def heal(self, amount):
+        self.__health += amount
 
     @staticmethod
     def get_instance():

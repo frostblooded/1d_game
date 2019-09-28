@@ -9,6 +9,8 @@ from game_manager import GameManager
 from select import select
 from evdev import InputDevice, ecodes
 
+from shooter import Shooter
+
 
 class InputManager(GameObject):
     CIRCLE_KEY_CODE = 305
@@ -27,7 +29,6 @@ class InputManager(GameObject):
         if has_to_read:
             for event in self.gamepad.read():
                 if event.type == ecodes.EV_KEY:
-                    print(event.code)
                     if event.code == self.LEFT_ARROW_KEY_CODE and event.value == 1:
                         print('Start running left')
                         Player.get_instance().running_left = True
@@ -41,27 +42,12 @@ class InputManager(GameObject):
                         print('Stop running right')
                         Player.get_instance().running_right = False
                     if event.code == self.CIRCLE_KEY_CODE and event.value == 1:
-                        self.spawn_bullet(Direction.RIGHT)
+                        Shooter.spawn_bullet(Direction.RIGHT)
                     if event.code == self.SQUARE_KEY_CODE and event.value == 1:
-                        self.spawn_bullet(Direction.LEFT)
+                        Shooter.spawn_bullet(Direction.LEFT)
                     if event.code == self.START_KEY_CODE and event.value == 1:
                         GameManager.get_instance().restart()
 
     def draw(self, pixels):
         pass
 
-    def can_spawn_bullet(self, direction):
-        return direction == direction.LEFT and Player.get_instance().get_current_position() > 0 \
-               or direction == direction.RIGHT and Player.get_instance().get_current_position() < PixelsManager.PIXEL_COUNT - 1
-
-    def get_bullet_spawn_pos(self, direction):
-        switcher = {
-            direction.LEFT: Player.get_instance().get_current_position() - 1,
-            direction.RIGHT: Player.get_instance().get_current_position() + 1
-        }
-
-        return switcher[direction]
-
-    def spawn_bullet(self, direction):
-        if self.can_spawn_bullet(direction):
-            Bullet(self.get_bullet_spawn_pos(direction), direction)
