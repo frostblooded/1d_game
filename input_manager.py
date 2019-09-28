@@ -4,16 +4,18 @@ from pixels_manager import PixelsManager
 from objects_holder import ObjectsHolder
 from bullet import Bullet
 from game_object import GameObject
+from game_manager import GameManager
 
 from select import select
 from evdev import InputDevice, ecodes
 
 
 class InputManager(GameObject):
-    RIGHT_ARROW_KEY_CODE = 547
-    LEFT_ARROW_KEY_CODE = 546
-    SQUARE_KEY_CODE = 308
     CIRCLE_KEY_CODE = 305
+    SQUARE_KEY_CODE = 308
+    START_KEY_CODE = 315
+    LEFT_ARROW_KEY_CODE = 546
+    RIGHT_ARROW_KEY_CODE = 547
 
     def __init__(self):
         super().__init__()
@@ -25,6 +27,7 @@ class InputManager(GameObject):
         if has_to_read:
             for event in self.gamepad.read():
                 if event.type == ecodes.EV_KEY:
+                    print(event.code)
                     if event.code == self.LEFT_ARROW_KEY_CODE and event.value == 1:
                         print('Start running left')
                         Player.get_instance().running_left = True
@@ -41,6 +44,8 @@ class InputManager(GameObject):
                         self.spawn_bullet(Direction.RIGHT)
                     if event.code == self.SQUARE_KEY_CODE and event.value == 1:
                         self.spawn_bullet(Direction.LEFT)
+                    if event.code == self.START_KEY_CODE and event.value == 1:
+                        GameManager.get_instance().restart()
 
     def draw(self, pixels):
         pass

@@ -1,44 +1,38 @@
 import Adafruit_WS2801
 
 from pixels_manager import PixelsManager
-from map import Map
-from player import Player
-from enemy import Enemy
-from direction import Direction
 from game_ender import GameEnder
-from input_manager import InputManager
 from objects_holder import ObjectsHolder
-from enemy_spawner import EnemySpawner
 
 
 class GameManager:
-    @staticmethod
-    def setup():
-        PixelsManager.setup()
-        Map.setup()
+    __instance = None
 
-        InputManager()
-        Player.get_instance()
-        EnemySpawner()
+    def __init__(self):
+        self.__restart_game = False
 
     @staticmethod
-    def run():
-        GameManager.setup()
+    def get_instance():
+        if GameManager.__instance is None:
+            GameManager.__instance = GameManager()
 
-        while True:
+        return GameManager.__instance
+
+    def run(self):
+        self.__restart_game = False
+
+        while not self.__restart_game:
             if GameEnder.has_ended:
-                GameManager.draw_ended_game()
+                self.draw_ended_game()
             else:
-                GameManager.update()
-                GameManager.draw()
+                self.update()
+                self.draw()
 
-    @staticmethod
-    def update():
+    def update(self):
         for obj in ObjectsHolder.objects:
             obj.update()
 
-    @staticmethod
-    def draw():
+    def draw(self):
         PixelsManager.pixels.clear()
 
         for obj in ObjectsHolder.objects:
@@ -46,12 +40,14 @@ class GameManager:
 
         PixelsManager.pixels.show()
 
-    @staticmethod
-    def draw_ended_game():
+    def draw_ended_game(self):
         PixelsManager.pixels.clear()
 
         for i in range(0, PixelsManager.PIXEL_COUNT):
             PixelsManager.pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(50, 0, 0))
 
         PixelsManager.pixels.show()
+
+    def restart(self):
+        self.__restart_game = True
 

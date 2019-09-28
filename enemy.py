@@ -7,7 +7,7 @@ from player import Player
 
 
 class Enemy(AutoMovingObject):
-    DAMAGE = 3
+    DAMAGE = 1
     RUN_WAIT = 500000
 
     def __init__(self, direction):
@@ -38,7 +38,7 @@ class Enemy(AutoMovingObject):
             self.destroy()
 
     def get_color(self):
-        return Adafruit_WS2801.RGB_to_color(220, 50, 50)
+        return Adafruit_WS2801.RGB_to_color(50, 50, 255)
 
     def get_run_wait(self):
         return Enemy.RUN_WAIT

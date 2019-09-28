@@ -39,7 +39,10 @@ class Player(GameObject):
             self.move_right()
 
     def draw(self, pixels):
-        pixels.set_pixel(self.get_current_position(), Adafruit_WS2801.RGB_to_color(50, 100, 150))
+        red = math.ceil(self.__health * 255 / self.HEALTH)
+        green = math.ceil(self.__health * 255 / self.HEALTH)
+        blue = math.ceil(self.__health * 255 / self.HEALTH)
+        pixels.set_pixel(self.get_current_position(), Adafruit_WS2801.RGB_to_color(255, green, blue))
 
     def die(self):
         self.__is_alive = False
@@ -58,3 +61,8 @@ class Player(GameObject):
             Player.__instance = Player()
 
         return Player.__instance
+
+    @staticmethod
+    def destroy_instance():
+        Player.get_instance().destroy()
+        Player.__instance = None
