@@ -48,7 +48,7 @@ class GameManager:
     def draw_ended_game():
         PixelsManager.pixels.clear()
 
-        for i in range(0, PixelsManager.PIXEL_COUNT - 1):
+        for i in range(0, PixelsManager.PIXEL_COUNT):
             PixelsManager.pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(50, 0, 0))
 
         PixelsManager.pixels.show()

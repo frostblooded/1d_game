@@ -19,8 +19,9 @@ class GameObject:
         if not GameObject.validate_position(position):
             return
 
-        Map.move_object_to(self, position, self.get_current_position())
+        old_pos = self.__current_pos
         self.__current_pos = position
+        Map.move_object_to(self, position, old_pos)
 
     def move_left(self):
         self.set_current_position(self.get_current_position() - 1)
