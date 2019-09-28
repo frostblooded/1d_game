@@ -26,3 +26,6 @@ class GameObject:
 
     def move_right(self):
         self.set_current_position(self.get_current_position() + 1)
+
+    def on_collision(self, other_object):
+        pass
