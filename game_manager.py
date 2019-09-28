@@ -6,6 +6,7 @@ from player import Player
 from enemy import Enemy
 from direction import Direction
 from game_ender import GameEnder
+from input_manager import InputManager
 
 
 class GameManager:
@@ -15,7 +16,8 @@ class GameManager:
     def setup():
         PixelsManager.setup()
         Map.setup()
-        GameManager.objects.append(Player())
+        GameManager.objects.append(InputManager())
+        GameManager.objects.append(Player.get_instance())
         GameManager.objects.append(Enemy(Direction.LEFT))
 
     @staticmethod
@@ -48,6 +50,6 @@ class GameManager:
         PixelsManager.pixels.clear()
 
         for i in range(0, PixelsManager.PIXEL_COUNT - 1):
-            PixelsManager.pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(255, 0, 0))
+            PixelsManager.pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(50, 0, 0))
 
         PixelsManager.pixels.show()

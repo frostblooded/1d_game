@@ -8,7 +8,7 @@ from player import Player
 
 
 class Enemy(GameObject):
-    DAMAGE = 2
+    DAMAGE = 5
     RUN_WAIT = 200000
 
     def __init__(self, direction):
