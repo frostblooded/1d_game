@@ -8,7 +8,10 @@ class HealthPack(AutoMovingBlinking):
     HEAL = 1
 
     def get_color(self):
-        return Adafruit_WS2801.RGB_to_color(0, 255, 0)
+        if self.active:
+            return Adafruit_WS2801.RGB_to_color(0, 255, 0)
+        else:
+            return Adafruit_WS2801.RGB_to_color(0, 5, 0)
 
     def on_collision(self, other_object):
         if isinstance(other_object, Player):

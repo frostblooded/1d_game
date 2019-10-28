@@ -41,9 +41,9 @@ class Player(GameObject):
             self.move_right()
 
     def draw(self, pixels):
-        red = math.ceil(self.__health * 255 / self.MAX_HEALTH)
-        green = math.ceil(self.__health * 255 / self.MAX_HEALTH)
-        blue = math.ceil(self.__health * 255 / self.MAX_HEALTH)
+        red = math.ceil((self.__health - 1) * 255 // self.MAX_HEALTH)
+        green = math.ceil((self.__health - 1) * 255 // self.MAX_HEALTH)
+        blue = math.ceil((self.__health - 1) * 255 // self.MAX_HEALTH)
         pixels.set_pixel(self.get_current_position(), Adafruit_WS2801.RGB_to_color(255, green, blue))
 
     def die(self):
@@ -62,6 +62,9 @@ class Player(GameObject):
 
         if self.__health > Player.MAX_HEALTH:
             self.__health = Player.MAX_HEALTH
+
+    def get_health(self):
+        return self.__health
 
     @staticmethod
     def get_instance():

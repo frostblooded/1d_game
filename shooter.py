@@ -6,6 +6,9 @@ from player import Player
 class Shooter:
     @staticmethod
     def can_spawn_bullet(direction):
+        if Player.get_instance().get_health() <= 1:
+            return False
+
         return direction == direction.LEFT and Player.get_instance().get_current_position() > 0 \
                or direction == direction.RIGHT and Player.get_instance().get_current_position() < PixelsManager.PIXEL_COUNT - 1
 

@@ -15,8 +15,7 @@ class AutoMovingBlinking(AutoMoving):
         super().on_run_timer()
 
     def draw(self, pixels):
-        if self.active:
-            super().draw(pixels)
+        super().draw(pixels)
 
     def deactivate(self):
         self.active = False

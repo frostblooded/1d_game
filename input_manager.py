@@ -1,8 +1,5 @@
 from direction import Direction
 from player import Player
-from pixels_manager import PixelsManager
-from objects_holder import ObjectsHolder
-from bullet import Bullet
 from game_object import GameObject
 from game_manager import GameManager
 
