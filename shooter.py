@@ -21,5 +21,5 @@ class Shooter:
     @staticmethod
     def spawn_bullet(direction):
         if Shooter.can_spawn_bullet(direction):
-            Bullet(Shooter.get_bullet_spawn_pos(direction), direction)
+            Bullet(direction, Shooter.get_bullet_spawn_pos(direction))
             Player.get_instance().damage(Player.HEALTH_LOST_ON_SHOT)

@@ -9,7 +9,7 @@ import Adafruit_WS2801
 
 
 class Player(GameObject):
-    HEALTH = 5
+    MAX_HEALTH = 5
     HEALTH_LOST_ON_SHOT = 1
     HEALTH_GAINED_ON_KILL = 1
 
@@ -25,7 +25,7 @@ class Player(GameObject):
         self.last_run_right = datetime.datetime.now()
         self.running_right = False
 
-        self.__health = self.HEALTH
+        self.__health = self.MAX_HEALTH
         self.__is_alive = True
 
     def update(self):
@@ -41,9 +41,9 @@ class Player(GameObject):
             self.move_right()
 
     def draw(self, pixels):
-        red = math.ceil(self.__health * 255 / self.HEALTH)
-        green = math.ceil(self.__health * 255 / self.HEALTH)
-        blue = math.ceil(self.__health * 255 / self.HEALTH)
+        red = math.ceil(self.__health * 255 / self.MAX_HEALTH)
+        green = math.ceil(self.__health * 255 / self.MAX_HEALTH)
+        blue = math.ceil(self.__health * 255 / self.MAX_HEALTH)
         pixels.set_pixel(self.get_current_position(), Adafruit_WS2801.RGB_to_color(255, green, blue))
 
     def die(self):
@@ -59,6 +59,9 @@ class Player(GameObject):
 
     def heal(self, amount):
         self.__health += amount
+
+        if self.__health > Player.MAX_HEALTH:
+            self.__health = Player.MAX_HEALTH
 
     @staticmethod
     def get_instance():

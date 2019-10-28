@@ -4,10 +4,17 @@ import Adafruit_WS2801
 
 from direction import Direction
 from game_object import GameObject
+from pixels_manager import PixelsManager
 
 
-class AutoMovingObject(GameObject):
-    def __init__(self, current_pos, direction):
+class AutoMoving(GameObject):
+    def __init__(self, direction, current_pos=None):
+        if not current_pos:
+            current_pos = 0
+
+            if direction == Direction.LEFT:
+                current_pos = PixelsManager.PIXEL_COUNT - 1
+
         super().__init__(current_pos)
 
         self.direction = direction

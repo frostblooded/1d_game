@@ -1,4 +1,4 @@
-from enemy_spawner import EnemySpawner
+from spawner import Spawner
 from game_manager import GameManager
 from game_ender import GameEnder
 from input_manager import InputManager
@@ -14,11 +14,11 @@ class Game:
         PixelsManager.setup()
         Map.setup()
         GameEnder.setup()
-
         InputManager()
         Player.get_instance()
-        EnemySpawner()
+        Spawner()
 
         GameManager.get_instance().run()
+
         Player.destroy_instance()
         ObjectsHolder.objects.clear()
