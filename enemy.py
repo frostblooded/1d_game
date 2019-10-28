@@ -11,7 +11,8 @@ class Enemy(AutoMovingBlinking):
 
     RUN_WAIT_DECREASE_DELAY_SECONDS = 10
     RUN_WAIT_DECREASE_STEP = 50000
-    RUN_WAIT_DECREASE_MAX = 200000
+    RUN_WAIT_DECREASE_MIN = 200000
+    SECONDS_TO_REACH_MIN_WAIT = (BASE_RUN_WAIT - RUN_WAIT_DECREASE_MIN) / RUN_WAIT_DECREASE_STEP * RUN_WAIT_DECREASE_DELAY_SECONDS
 
     def __init__(self, direction):
         self.damage = self.DAMAGE
@@ -37,7 +38,7 @@ class Enemy(AutoMovingBlinking):
         difficulty_modifier = TimeManager.get_instance().time_since_start().seconds // Enemy.RUN_WAIT_DECREASE_DELAY_SECONDS\
                               * Enemy.RUN_WAIT_DECREASE_STEP
         res = Enemy.BASE_RUN_WAIT - difficulty_modifier
-        res = max(res, Enemy.RUN_WAIT_DECREASE_MAX)
+        res = max(res, Enemy.RUN_WAIT_DECREASE_MIN)
         print("Current enemy run wait: " + str(res))
         return res
 
